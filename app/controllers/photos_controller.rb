@@ -3,13 +3,43 @@ class PhotosController < ApplicationController
     @list_of_photos = Photo.all
   end
 
-def  show
+  def  show
 
+    @photo = Photo.find_by({ :id => params[:id]})
+
+  end
+
+  def new_form
+  end
+
+  def create_row
+    p = Photo.new
+    p.caption = params[:the_caption]
+    p.source = params[:the_source]
+    p.save
+
+    #render("creat_row.html.erb")
+    redirect_to("http://localhost:3000/photos")
+  end
+
+  def edit_form
+    e = Photo.find_by({ :id => params[:id] })
+    e.caption = params[:the_caption_new]
+    e.source = params[:the_source_new]
+    e.save
+  end
+
+
+def update_row
+  @list_of_photos = Photo.all
   @photo = Photo.find_by({ :id => params[:id]})
-
 end
 
-def new_form
-end
+  def delete
+      i = Photo.find_by({ :id => params[:id]})
+      i.destroy
+      @list_of_photos = Photo.all
+      redirect_to ("http://localhost:3000/photos/")
+    end
 
 end
